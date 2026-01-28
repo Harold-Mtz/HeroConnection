@@ -13,7 +13,7 @@ trait ApiResponse
             'message' => $message,
             'data' => $data,
             'error' => null,
-            'ip' => request()->ip_address
+            'ip' => request()->ip()
         ], $code);
     }
 

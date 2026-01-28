@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/heroes', [HeroController::class, 'store']);
 Route::get('/heroes/search/{hero}', [HeroController::class, 'searchByName']);
+Route::post('/heroes/{heroId}/image', [ImageController::class, 'store']);

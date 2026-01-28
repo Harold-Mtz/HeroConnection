@@ -14,21 +14,48 @@ class HeroController extends Controller
 
     public function store(HeroRequest $request)
     {
-        return $this->successResponse(
-            new HeroResource(Hero::create($request->all())),
+        try{
+            $hero = Hero::create($request->all());
+
+            return $this->successResponse(
+            new HeroResource($hero),
             'Hero created successfully',
             201
             );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                'Failed to create hero',
+                $e->getMessage(),
+                500
+            );
+        }
+
+        
     }
 
-    public function searchByName(string $hero)
+    public function searchByName(string $heroName)
     {
-        $heroes = Hero::where('name', 'LIKE', "%$hero%")->get();
+        $hero = Hero::with('image')->where('name', 'LIKE', "%$heroName%")->firstOrFail();
 
-        return $this->successResponse(
-            HeroResource::collection($heroes),
-            'Heroes retrieved successfully',
-            200
-        );
+        if(!$hero) {
+            return $this->errorResponse(
+                'Hero not found',
+                "No hero found with the name {$heroName}",
+                404
+                );
+        }
+
+        $powerApiUrl = "https://www/api/powers/hero/{$hero->id}";
+            $response = Http::get($powerApiUrl);
+            $powerData = $response->successful() ? $response->json()['data'] : null;
+
+            return $this->successResponse([
+                'hero' => new HeroResource($hero),
+                'hero_image' => $hero->image ? $hero->image->url : null,
+                'powers' => $powerData
+            ],
+            'Hero retrieved successfully',
+            200);
+
     }
 }
