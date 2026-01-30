@@ -39,7 +39,8 @@ class PowerController extends Controller
      */
     public function store(PowerRequest $request)
     {
-        $power =  Power::create($request->validated());
+        $power = $request->validated() ;
+        Power::create($power);
 
         $data = new PowerResource($power);
 
@@ -57,7 +58,15 @@ class PowerController extends Controller
     mjhgf     */
     public function show(string $id)
     {
-        //
+        $hero = Power::all()->where('hero_id',$id)->first();
+        $data = new PowerResource($hero);
+
+        if(!$hero){
+            return $this->response(null,"Hero doesn't exist",404);
+        }
+
+        return $this->response($data,'Power retrieved successfully',200);
+
     }
 
     /**

@@ -25,7 +25,6 @@ class PowerRequest extends FormRequest
             'hero_id' => 'required|integer',
             'name' => 'required|string|max:255',
             'level' => 'required|integer|min:1',
-            'image' => 'nullable|string',
         ];
     }
 }
