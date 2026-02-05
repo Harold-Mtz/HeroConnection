@@ -19,7 +19,8 @@ class HeroResource extends JsonResource
             'name' => $this->name,
             'age' => $this->age,
             'color' => $this->color,
-            'gender' =>$this->gender
+            'gender' =>$this->gender,
+            'hero_image' => $this->image ? $this->image->url : null,
         ];
     }
 }

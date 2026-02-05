@@ -22,10 +22,20 @@ class HeroRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'age' => 'required|integer',
-            'color' => 'required|string|max:100',
-            'gender' => 'required|string|max:50',
+            'hero.name' => 'required|string|max:255',
+            'hero.age' => 'required|integer',
+            'hero.color' => 'required|string|max:100',
+            'hero.gender' => 'required|string|max:50',
+            'hero.url' => 'nullable|string|max:255',
+
+            'power.name' => 'required|string|max:255',
+            'power.level' => 'required|integer',
+            'power.url' => 'nullable|string|max:255',
+            
+            'planet.name' => 'required|string|max:255',
+            'planet.color' => 'required|string|max:100',
+            'planet.description' => 'required|string',
+            'planet.url' => 'nullable|string|max:255',
         ];
     }
 
